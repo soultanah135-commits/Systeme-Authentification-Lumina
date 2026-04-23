@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina App | Professional Validation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-primary: #ff758c;
+            --pink-dark: #ff7eb3;
+            --error-color: #ff4757;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+        
+        body {
+            background: linear-gradient(rgba(255, 117, 140, 0.5), rgba(255, 126, 179, 0.5)), 
+                        url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-wrapper {
+            width: 1000px;
+            height: 650px;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .side-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--pink-primary), var(--pink-dark));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .side-panel h1 { font-size: 4rem; font-weight: 700; }
+
+        .form-container {
+            flex: 1.2;
+            padding: 50px 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: white;
+        }
+
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand { font-size: 26px; font-weight: 700; color: var(--pink-primary); margin-bottom: 20px; display: block; }
+        h2 { font-size: 30px; color: #333; margin-bottom: 10px; }
+        .subtitle { color: #888; font-size: 14px; margin-bottom: 30px; }
+
+        .input-group { margin-bottom: 15px; text-align: left; position: relative; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #f9f0f2;
+            border-radius: 12px;
+            font-size: 15px;
+            background: #fffafa;
+            outline: none;
+            transition: 0.3s;
+        }
+
+   
+        input.invalid { border-color: var(--error-color); background: #fff5f5; }
+
+   
+        .error-message {
+            color: var(--error-color);
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 4px;
+            display: none; 
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--pink-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .primary-btn:hover { background: #ff5e78; transform: translateY(-2px); }
+
+        .link-btn {
+            background: none; border: none; color: var(--pink-primary);
+            cursor: pointer; font-weight: 700; margin-top: 20px;
+            display: block; width: 100%; font-size: 14px; text-align: center;
+        }
+
+        .otp-box { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .otp-box input { width: 50px; text-align: center; font-size: 24px; }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="side-panel">
+        <h1>Lumina</h1>
+        <p>Illuminate your digital vision</p>
+    </div>
+
+    <div class="form-container">
+        <span class="brand">Lumina</span>
+
+        <div class="step active" id="step1">
+            <h2>Welcome Home</h2>
+            <p class="subtitle">Experience the magic of Lumina today.</p>
+            <button class="primary-btn" onclick="goTo(2, true)">Start Journey</button>
+        </div>
+
+        <div class="step" id="step2">
+            <h2>Sign In</h2>
+            <p class="subtitle">Welcome back! Please enter your details.</p>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter your email" class="required-field">
+                <span class="error-message">This field is required</span>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••" class="required-field">
+                <span class="error-message">This field is required</span>
+            </div>
+            <button class="primary-btn" onclick="goTo(3)">Sign In</button>
+            <button class="link-btn" onclick="goTo(4, true)">Need an account? Sign Up</button>
+        </div>
+
+        <div class="step" id="step3">
+            <h2>Verify Account</h2>
+            <p class="subtitle">Enter the 4-digit code sent to your email.</p>
+            <div class="otp-box">
+                <input type="text" maxlength="1" class="required-field">
+                <input type="text" maxlength="1" class="required-field">
+                <input type="text" maxlength="1" class="required-field">
+                <input type="text" maxlength="1" class="required-field">
+            </div>
+            <button class="primary-btn" onclick="validateOTP()">Verify</button>
+            <button class="link-btn" onclick="goTo(2, true)">Back to Login</button>
+        </div>
+
+        <div class="step" id="step4">
+            <h2>Join Lumina</h2>
+            <p class="subtitle">Create your account in a few seconds.</p>
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Your name" class="required-field">
+                <span class="error-message">Name is required</span>
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="name@domain.com" class="required-field">
+                <span class="error-message">Valid email is required</span>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Create password" class="required-field">
+                <span class="error-message">Password is required</span>
+            </div>
+            <button class="primary-btn" onclick="goTo(3)">Create Account</button>
+            <button class="link-btn" onclick="goTo(2, true)">Already a member? Login</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goTo(num, skipCheck = false) {
+        const currentStep = document.querySelector('.step.active');
+
+        if (!skipCheck) {
+            const inputs = currentStep.querySelectorAll('.required-field');
+            let allFilled = true;
+
+            inputs.forEach(input => {
+               
+                const errorSpan = input.nextElementSibling;
+
+                if (input.value.trim() === "") {
+                    input.classList.add('invalid');
+                    if(errorSpan) errorSpan.style.display = 'block'; 
+                    allFilled = false;
+                } else {
+                    input.classList.remove('invalid');
+                    if(errorSpan) errorSpan.style.display = 'none'; 
+                }
+            });
+
+            if (!allFilled) return; 
+        }
+
+       
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + num).classList.add('active');
+    }
+
+    function validateOTP() {
+        const currentStep = document.getElementById('step3');
+        const inputs = currentStep.querySelectorAll('.required-field');
+        let allFilled = true;
+
+        inputs.forEach(input => {
+            if (input.value.trim() === "") {
+                input.classList.add('invalid');
+                allFilled = false;
+            } else {
+                input.classList.remove('invalid');
+            }
+        });
+
+        if (allFilled) {
+            alert('Verified!');
+        }
+    }
+</script>
+
+</body>
+</html>
